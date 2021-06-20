@@ -13,7 +13,7 @@ from PlayerClass import PlayerClass
 # Importing the obstacle class;
 from ObstacleClass import ObstacleClass
 
-
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Global app data;
 
 # Widget Settings;
@@ -24,22 +24,15 @@ PERCENTAGEPLAYERSTARTLOCATIONONMAP = 30
 MAXFPS = 60
 GRAVITYVALUE = 3
 
-
 # Obstacle data;
 OBSTACLEWIDTH    					= 20
 OBSTACLEHEIGHT 	 					= 40
 MAXOBSTACLESPEED 					= 10
-OBJECTSPEEDINCREMENTATIONSPEEDPOINT = 15
-DEFAULTOBSTACLESPEED		        = 3
+OBJECTSPEEDINCREMENTATIONSPEEDPOINT                     = 15
+DEFAULTOBSTACLESPEED		                        = 3
 
 # Text data;
 GAMETEXTFONT = 32
-
-
-
-
-
- 
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,20 +45,13 @@ PLAYERHEIGHT               = 50
 # Player Physics;
 PLAYERJUMPHEIGHT		   = 175
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 # Colors;
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED   = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE  = (0, 0, 255)
-
-
-
-
 
 
 # The main app class, using oop;
@@ -80,7 +66,7 @@ class MainApp():
 		self.fpsTextString				= "FPS: " # The state keeper for the fps text;
 		self.playerPointsTextString     = "Points: " # The state keeper for the points text;
 
-
+		
 		# Initialising pygame and related stuff;
 		pygame.font.init()
 		pygame.mixer.init()
@@ -111,19 +97,13 @@ class MainApp():
 		pygame.display.set_caption(f"Adaks Dino Game | Goodluck {_username}")
 
 
-		
-
-		
-		
 		# __init__() function starts the app loop;
 		# The screen rerenders will be made in the constant self.reRenderScreenF();
-		
 		while self.gameIsRunning:
 
 			# Calling the game clock;
 			self.gameClock.tick(MAXFPS)
 			self.fpsTextString = f"FPS: {str(int(self.gameClock.get_fps()))}"
-
 
 			# Running the start animation if it hasnt run yet;
 			if not(self.gameStartupAnimationHasRun):
@@ -132,10 +112,7 @@ class MainApp():
 				# Setting the self.gameStartupAnimationHasRun to True so it doesnt run again;
 				self.gameStartupAnimationHasRun = True
 				
-
-
-
-
+				
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					pygame.quit()
@@ -148,17 +125,13 @@ class MainApp():
 							# The player hasn't jumped so jumping them;
 							self.playerObject.playerRect.y -= PLAYERJUMPHEIGHT
 						
-		
-
-
-
+						
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			# Physics;
 
 			# Player drops on jumps;
 			self.dropPlayerByGravityF()
 			
-
 
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			# Obstacle Movements;
@@ -175,11 +148,7 @@ class MainApp():
 							self.obstacleObject.movementSpeed += 1
 				print(self.obstacleObject.movementSpeed)
 				
-			
-
-
-
-
+				
 			# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			# Collision Detection;
 
@@ -193,20 +162,14 @@ class MainApp():
 				self.playerObject.playerPoints += 1
 				self.obstacleObject.obstacleRect.x = WIDTH - OBSTACLEWIDTH
 
-
-
-		
 			# Rerendering the screen;
 			self.reRenderScreenF()
-
-
 
 	# The rerender function;
 	def reRenderScreenF(self):
 
 		# Clearing the background;
 		self.WIN.fill(BLACK)
-
 
 		# Re-Initialising the map;
 		self.initialiseMapF()
@@ -226,21 +189,16 @@ class MainApp():
 		# Drawing the points text;
 		self.WIN.blit(self.gameTextsFont.render(f"Points: {str(self.playerObject.playerPoints)}", False, WHITE), (15, 105))
 
-
-
+		# Updating the display / Displaying the changes / Re-Rendering the screen;
 		pygame.display.update()
-
-
 
 
     # The function for initialising the map;
 	def initialiseMapF(self):
         
 		# Creating the floor;
-	
 		self.floorFrame = pygame.Rect(0, (HEIGHT - self.floorPlatformMarginFromBottom), WIDTH, self.floorPlatformHeight)
 		pygame.draw.rect(self.WIN, GREEN, self.floorFrame)
-
 
 
 	# The function for initialising the class/state data that will be changed throught the app run;
@@ -251,8 +209,6 @@ class MainApp():
 		self.floorPlatformHeight           = 10  # The height of the platform (this is just a visual data);
 
         
-
-    
 	# The function for initialising the player / creating the player object;
 	# Username, age and lastwords are taken as params; 
 	def initialisePlayerF(self, username):
@@ -288,8 +244,6 @@ class MainApp():
 			self.reRenderScreenF()
 
 
-
-
 	# The function for dropping the player by the gravity amount if the player isn't on the platform (aka: Falling Physics);
 	def dropPlayerByGravityF(self):
 		# Checking if the player is on platform;
@@ -314,19 +268,12 @@ class MainApp():
 		# Using object based approach for using class functions to do stuff such as collision detection; 
 		self.obstacleObject = ObstacleClass(obstacleRect, DEFAULTOBSTACLESPEED)
 
-
 	
 	# The function for starting the texts on the screen;
 	# Their values will be changed via text strings stateholders and rerenders will be done via self.reRenderScreenF()
 	def initialiseDisplayTextsF(self):
 		# Creating the font;
 		self.gameTextsFont = pygame.font.SysFont('Comic Sans MS', GAMETEXTFONT)
-
-		
-		
-
-
-
 
 
 	# The loss function, its to be called wwhen the player collides with the obstacle;
@@ -369,7 +316,6 @@ class MainApp():
 		quitButton.setObjectName("quitButton")
 
 
-
 		self.infoWindow.setStyleSheet("""
 			QPushButton#restartButton {
 			    border: 2px solid white;
@@ -395,9 +341,7 @@ class MainApp():
 		""")
 
 
-
 		self.infoWindow.show()
-
 
 
 	def quitAppF(self):
@@ -416,21 +360,7 @@ class MainApp():
 		self.obstacleObject.movementSpeed  = DEFAULTOBSTACLESPEED
 		self.obstacleObject.hasBeenStopped = False 
 		
-
-
-
-
-
-
-		
-		
-
-
-		
-
-
-
-
+	
 # The popup window asking for user information at the start of the game;
 class AskUserInfoPopup(qtw.QWidget):
 	def __init__(self):
@@ -442,7 +372,6 @@ class AskUserInfoPopup(qtw.QWidget):
         # Setting widget settings
 		self.setFixedSize(widgetWidth, widgetHeight)
 		self.setWindowTitle("Adaks Dino Game!")
-
 
 		# Background color frame;
 		backgroundFrame = qtw.QFrame(self)
@@ -463,7 +392,7 @@ class AskUserInfoPopup(qtw.QWidget):
 		inputNamesLabel.move(10, 75)
 
 		# Entries;
-		#
+		# Username Entry;
 		self.usernameEntry = qtw.QLineEdit(self)
 		self.usernameEntry.setFont(qtg.QFont("Arial", 15))
 		self.usernameEntry.setFixedSize(240, 30)
@@ -471,8 +400,6 @@ class AskUserInfoPopup(qtw.QWidget):
 		self.usernameEntry.move(125, 72)
 		self.usernameEntry.setPlaceholderText("username")
 		
-
-
 		# Register Button;
 		registerButton = qtw.QPushButton("Start", self)
 		registerButton.setObjectName("registerButton")
@@ -481,7 +408,7 @@ class AskUserInfoPopup(qtw.QWidget):
 		registerButton.setFont(qtg.QFont("Arial", 16))
 		registerButton.move(140, 145)
 
-
+		
 		# Loading stylesheet;
 		self.setStyleSheet("""
 			QFrame#backgroundFrame {
@@ -510,7 +437,6 @@ class AskUserInfoPopup(qtw.QWidget):
 		self.show()
 
 
-
     # The function for running required validations and then basedd of starting the game (or not);
 	def playGameF(self):
 		# First, assigning the values to variables for easier access;
@@ -524,18 +450,15 @@ class AskUserInfoPopup(qtw.QWidget):
 			qtw.QMessageBox.warning(self, "Error", "Please enter a username!")
 
 	
-
 	# The function for clearing the entry window and starting the game;
 	def startGameF(self):
 		# Clearing the entry window;
 		self.close()
 
-
 		# Starting the game;
 		gameWindow = MainApp(
 			self.usernameEntry.text(),
 		)
-
 
 
 if __name__ == "__main__":
